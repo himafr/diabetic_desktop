@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css" />
+
+    <title>add Recipe</title>
+  </head>
+  <body>
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add  Recipe </li>
+        <li class="reload-btn" style="margin-left: auto">
+          <i
+            onclick="refresh()"
+            id="refresh"
+            class="fa-solid fa-arrows-rotate"
+          ></i>
+        </li>
+      </ol>
+    </nav>
+    <div id="main" class="container">
+      <div class="mb-3">
+        <label for="image" class="form-label">Image File </label>
+        <input type="file" class="form-control" placeholder="recipe_photo" required id="image" accept="image/*" onchange="validateImage()"/>
+      </div>
+      <div class="mb-3">
+        <label for="book-title" class="form-label">Recipe Name</label>
+        <input type="text" class="form-control" placeholder="Recipe name" required id="recipe_name" />
+      </div>
+      <div class="mb-3">
+        <label for="book_summary" class="form-label">ingredients</label>
+        <textarea type="text" class="form-control" placeholder="ingredients" id="ingredients" ></textarea>
+        <div id="ingredientslHelp" class="form-text">اضف علامة ## بين كل مكون و الاخر </div>
+      </div>
+      <div class="mb-3">
+        <label for="book_summary" class="form-label">instructions</label>
+        <textarea type="text" class="form-control" placeholder="instructions" id="instructions" ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="book-desc" class="form-label">recipe carb </label>
+        <input type="number" class="form-control" placeholder="recipe carb" id="recipe_carb" />
+      </div>
+      
+     
+      <div class="mb-3">
+        <label for="book-desc" class="form-label">category name  </label>
+        <select  class="form-control"  id="category_id">
+            <option value="">Select a category</option>
+            <option value="1">وصافات صحيه</option>
+            <option value="2">وصافات عاديه</option>
+            <option value="3">مشروبات</option>
+          </select>
+      </div>
+      
+       
+      <button type="submit" onclick="createRecipe()" class="btn btn-primary">Submit</button>
+      </div>
+
+      <script>
+        if (typeof module === "object") {
+          window.module = module;
+          module = undefined;
+        }
+      </script>
+      <!-- normal script imports etc  -->
+       <script src="../src/consts.js"></script>
+  
+      <!-- import jquery  code  -->
+      <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  
+      <!-- import bootstrap js code  -->
+      <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  
+      <!-- functions by me -->
+      <script src="../src/utils/fn.js"></script>
+  
+  
+      <!-- end of importing js code  -->
+      <script>
+        if (window.module) module = window.module;
+      </script>
+      <script>
+        if (localStorage.jwt_token == "undefined" || !localStorage.jwt_token)
+          location.href = "./pages/home.html";
+        
+          function validateImage() { 
+            const imageInput = document.getElementById("image"); 
+            const filePath = imageInput.value; 
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+             if (!allowedExtensions.exec(filePath)) { 
+              alert("Invalid file type. Only image files are allowed.");
+               imageInput.value = '';
+                return false; 
+              }
+               return true; 
+              }
+
+        function createRecipe() {    
+          let data = new FormData();
+          data.append("recipe_photo", document.getElementById("image").files[0]);
+          data.append("recipe_name", document.getElementById("recipe_name").value);
+          data.append("ingredients", document.getElementById("ingredients").value);
+          data.append("instructions", document.getElementById("instructions").value);     
+          data.append("recipe_carb", document.getElementById("recipe_carb").value);     
+          data.append("category_id", document.getElementById("category_id").value);     
+          const btnPrimary=document.querySelector(".btn-primary");
+          btnPrimary.disabled=true;
+          btnPrimary.innerHTML="الرجاء الانتظار اثناء رفع الملفات " 
+          fetch(`${url_dev}api/v1/recipes`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.jwt_token}`,
+            },
+            body: data,
+          })
+          .then((response) => response.json())
+          .then((res) => {
+            alert(res.message);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("An error occurred while creating the book.");
+            
+          }).finally(()=>{
+            btnPrimary.disabled=false;
+            btnPrimary.innerHTML="Submit" 
+          });
+        }
+      </script>         
+  </body>
+</html>

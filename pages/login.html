@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in </title>
+    <!-- animation lib -->
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.min.css">
+    <!-- normalization  -->
+    <link rel="stylesheet" href="../src/css/normalize.css">
+    <!-- bootstrap  -->
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- custom aos styles  -->
+    <link href="../src/css/aos.css" rel="stylesheet" />
+    <!-- template styles  -->
+    <link href="../src/css/templatemo-nomad-force.css" rel="stylesheet" />
+    <!-- custom loader styles  -->
+    <link rel="stylesheet" href="../src/loader.css" />
+    <!-- custom login styles  -->
+    <link rel="stylesheet" href="../src/css/login.css" />
+  </head>
+  <body dir="rtl">
+    <main id="welcome" class="welcome_popup">
+        <section class="hero" id="hero">
+
+            <div class="heroText">
+                <h1 class="text-white mt-5 mb-lg-4" data-aos="zoom-in" data-aos-delay="800">
+                   Diabetic Care
+                </h1>
+                
+                <p class="text-secondary-white-color" data-aos="fade-up" data-aos-delay="1000">
+                    متابعة و التحكم في نظام <strong class="custom-underline">متابعة و علاج مرضي السكري </strong>  
+                    <br>
+                    <br>
+                     <hima style="color: rgb(205, 204, 204);"> اضغط في اي مكان للبدء </hima>   
+                </p>
+            </div>
+
+            <div class="videoWrapper">
+                <video autoplay="" loop="" muted="" class="custom-video" poster="../videos/tech.png">
+                    <source src="../videos/tech.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="overlay"></div>
+        </section>
+
+    </main>
+    <!-- log in main process -->
+    <main class="login">
+        <section class="show-section">
+            <img src="../videos/tech.png" width="500" alt="">
+        </section>
+        <section class="form-setion">
+            <form>
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="ادخل اسم المستخدم">
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" class="form-control" id="password" placeholder="ادخل كلمة المرور">
+                </div>
+                <span id="loader" class="loader" style="display: none;"></span>
+                <button type="submit" class="btn btn-primary" id="login">تسجيل الدخول</button>
+                <p id="error"></p>
+            </section>
+</form>
+    </main>
+       <!-- important for importing js code  -->
+       <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+       <!-- normal script imports etc  -->
+   
+ 
+      <!-- define jQuery  # -->
+       <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<!-- load aos javascript code -->
+    <script src="../src/js/aos.js"></script>
+<!-- custom js to show text with effect from css -->
+    <script src="../src/js/custom.js"></script>
+    <!-- load consts and login js -->
+    <script src="../src/consts.js"></script>
+    <!-- load login js -->
+    <script src="../src/js/login.js"></script>
+    <script>
+      if (localStorage.jwt_token && localStorage.jwt_token != "undefined")
+        location.href = "../index.html";
+    </script>
+    <!-- end of importing js code  -->
+<script>if (window.module) module = window.module;</script>
+  </body>
+</html>

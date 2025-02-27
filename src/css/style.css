@@ -1,0 +1,54 @@
+/* start global rules  */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url("../../fonts/static/Rubik-Medium.ttf") format("truetype");
+}
+
+body {
+  margin: 0px;
+  color: #1a202c;
+  text-align: left;
+  font-family: "Rubik", serif !important;
+  font-optical-sizing: auto;
+}
+/* end  global rules  */
+/* variables */
+
+:root {
+
+    --primary-color: #007bff;
+    --bg-color: #F8F9FC;
+    --g-bg-color:linear-gradient(to top, #FFFFFF, rgba(255, 255, 255.9), rgba(255, 255, 255, .4),#DDD);
+}
+
+/* end of variables */
+.reload-btn {
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.circle-img {
+  border-radius: 50% !important;
+  object-fit: cover;
+  border: solid 4px #fff;
+}
+
+.hide {
+  display: none;
+}
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 100vw;
+    padding: 0;
+    max-width: 100vw;
+  }
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css" />
+
+    <title>add books</title>
+  </head>
+  <body>
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add  Book </li>
+        <li class="reload-btn" style="margin-left: auto">
+          <i
+            onclick="refresh()"
+            id="refresh"
+            class="fa-solid fa-arrows-rotate"
+          ></i>
+        </li>
+      </ol>
+    </nav>
+
+    <div id="main" class="container">
+      <div class="mb-3">
+        <label for="pdf" class="form-label">PDF File</label>
+        <input type="file" class="form-control" placeholder="pdf" required id="pdf" accept=".pdf" onchange="validatePdf()"/>
+      </div>
+       
+      <div class="mb-3">
+        <label for="image" class="form-label">Image File </label>
+        <input type="file" class="form-control" placeholder="image" required id="image" accept="image/*" onchange="validateImage()"/>
+      </div>
+      <div class="mb-3">
+        <label for="book-title" class="form-label">Book Title</label>
+        <input type="text" class="form-control" placeholder="book title" required id="book_title" />
+      </div>
+      <div class="mb-3">
+        <label for="book_summary" class="form-label">Book Summary</label>
+        <input type="text" class="form-control" placeholder="book summary" id="book_summary" />
+      </div>
+      <div class="mb-3">
+        <label for="book-desc" class="form-label">Book Description</label>
+        <input type="text" class="form-control" placeholder="book description" id="book_desc" />
+      </div>
+      
+       
+      <button type="submit" onclick="createBook()" class="btn btn-primary">Submit</button>
+      </div>
+
+
+      <!-- <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" >Submit</button>
+      </form> -->
+
+      <script>
+        if (typeof module === "object") {
+          window.module = module;
+          module = undefined;
+        }
+      </script>
+      <!-- normal script imports etc  -->
+       <script src="../src/consts.js"></script>
+  
+      <!-- import jquery  code  -->
+      <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  
+      <!-- import bootstrap js code  -->
+      <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  
+      <!-- functions by me -->
+      <script src="../src/utils/fn.js"></script>
+  
+  
+      <!-- end of importing js code  -->
+      <script>
+        if (window.module) module = window.module;
+      </script>
+      <script>
+        if (localStorage.jwt_token == "undefined" || !localStorage.jwt_token)
+          location.href = "./pages/home.html";
+        
+          function validateImage() { 
+            const imageInput = document.getElementById("image"); 
+            const filePath = imageInput.value; 
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+             if (!allowedExtensions.exec(filePath)) { 
+              alert("Invalid file type. Only image files are allowed.");
+               imageInput.value = '';
+                return false; 
+              }
+               return true; 
+              }
+        
+
+          function validatePdf() { 
+            const pdfInput = document.getElementById("pdf"); 
+            const filePath = pdfInput.value;
+            const allowedExtensions = /(\.pdf)$/i; 
+            if (!allowedExtensions.exec(filePath)) {
+               alert("Invalid file type. Only PDF files are allowed.");
+                pdfInput.value = '';
+                 return false; 
+                }
+                 return true; 
+                }
+
+        function createBook() {
+          let data = new FormData();
+          data.append("pdf", document.getElementById("pdf").files[0]);
+          data.append("image", document.getElementById("image").files[0]);
+          data.append("book_summary", document.getElementById("book_summary").value);
+          data.append("book_desc", document.getElementById("book_desc").value);
+          data.append("book_title", document.getElementById("book_title").value);     
+          const btnPrimary=document.querySelector(".btn-primary");
+          btnPrimary.disabled=true;
+          btnPrimary.innerHTML="الرجاء الانتظار اثناء رفع الملفات " 
+          fetch(`${url_dev}api/v1/books`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.jwt_token}`,
+            },
+            body: data,
+          })
+          .then((response) => response.json())
+          .then((res) => {
+            alert(res.message);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("An error occurred while creating the book.");
+            
+          }).finally(()=>{
+            btnPrimary.disabled=false;
+            btnPrimary.innerHTML="Submit" 
+          });
+         
+        }
+      </script>         
+  </body>
+</html>

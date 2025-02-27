@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books Page</title>
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css" />
+    <!-- https://fonts.google.com/ -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css" />
+    <!-- bootstrap injection -->
+    <link
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- template -->
+    <link href="../src/css/templatemo-xtra-blog.css" rel="stylesheet" />
+    <!-- include animate -->
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.min.css" />
+    <!-- global styling  -->
+    <link rel="stylesheet" href="../src/css/normalize.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link rel="stylesheet" href="../src/css/loader.css" />
+    <!-- book style css -->
+    <link rel="stylesheet" href="../src//css/book.css" />
+    <script>
+      require("../src/consts.js");
+    </script>
+    <script src="../src/consts.js"></script>
+  </head>
+
+  <body>
+    <div id="loader" class="loader hide"></div>
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Books Page</li>
+       
+        <li class="reload-btn" style="margin-left: auto">
+          <i
+            onclick="refresh()"
+            id="refresh"
+            class="fa-solid fa-arrows-rotate"
+          ></i>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="container-fluid">
+      <div style="float: right">
+        add book
+        <a href="../manage/books.html">
+          <i class="fa fa-plus-minus"></i>
+        </a>
+      </div>
+      <main class="tm-main" id="tm-main">
+        <div class="book hide" id="h_book"></div>
+        <!-- books -->
+        <div class="row tm-row" id="h_books"></div>
+        <div class="row tm-row tm-mt-100 tm-mb-75">
+          <div class="tm-prev-next-wrapper">
+            <a
+              onclick="getAllBooks(pg-1)"
+              id="prev"
+              class="mb-2 tm-btn tm-btn-primary tm-prev-next tm-mr-20"
+              >Prev</a
+            >
+            <a
+              onclick="getAllBooks(pg+1)"
+              id="next"
+              class="mb-2 tm-btn tm-btn-primary tm-prev-next"
+              >Next</a
+            >
+          </div>
+          <div class="tm-paging-wrapper">
+            <span class="d-inline-block mr-3">Page</span>
+            <nav class="tm-paging-nav d-inline-block">
+              <ul id="pages"></ul>
+            </nav>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!--  change books data -->
+    <dialog style="width: 95vw">
+      <div class="loader hide" id="load2"></div>
+      <header>تعديل بيانات الكتاب</header>
+      <form id="book_form">
+        <div class="mb-3">
+          <label for="book-title" class="form-label">
+            Edit your book title
+          </label>
+          <input
+            id="book-title"
+            type="text"
+            minlength="5"
+            placeholder="اسم الكتاب"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="book-summary" class="form-label">
+            Edit your book summary
+          </label>
+          <textarea id="book-summary" class="form-control"> </textarea>
+        </div>
+        <div class="mb-3">
+          <label for="book-desc" class="form-label">
+            Edit your book description
+          </label>
+          <textarea id="book-desc" class="form-control"></textarea>
+        </div>
+       
+        <br />
+        <input type="hidden" value="0" id="myBookId" />
+        <input type="submit" class="btn btn-primary"/>
+        <button id="btn-cancel" class="btn btn-light">Cancel</button>
+        <button style="bottom: red ; float: right;" id="delete_book" class="btn btn-danger">delete</button>
+      </form>
+    </dialog>
+
+    <script>
+      const book_form = document.querySelector(`#book_form`);
+      const dialog = document.querySelector(`dialog`);
+      const form = dialog.querySelector(`form`);
+      const btnLogin = document.querySelector(`#btn-login`);
+      const btnCancelDialog = document.querySelector(`#btn-cancel`);
+      const deleteBook = document.querySelector("#delete_book");
+
+      deleteBook.onclick = async (e) => {
+        e.preventDefault();
+        const loader = document.querySelector(`#load2`);
+        loader.classList.toggle("hide")
+
+        let id = parseInt(document.getElementById("myBookId").value);
+        let data = await fetch(`${url_dev}api/v1/books/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.jwt_token}`,
+          },
+        });
+const res=await data.json();
+loader.classList.toggle("hide");
+        if (res.status === "success") {
+          dialog.close();
+          getAllBooks(0);
+        } else {
+          alert("Failed to delete book");
+        } // end else
+      };
+      function start(id) {
+        form.reset();
+        dialog.showModal();
+        const load2 = $(`#load2`);
+        document.getElementById("myBookId").value = id;
+        getBookById(parseInt(id), load2);
+      }
+      btnCancelDialog.onclick = (e) => {
+        e.preventDefault();
+        dialog.close();
+      };
+      book_form.onsubmit = async (e) => {
+        e.preventDefault();
+        const loader = document.querySelector(`#load2`);
+        let id = parseInt(document.getElementById("myBookId").value);
+        let book_title = document.getElementById("book-title").value;
+        let book_desc = document.getElementById("book-desc").value;
+        let book_summary = document.getElementById("book-summary").value;
+        let data = {
+          book_title,
+          book_summary,
+          book_desc,
+        };
+        let res = await updateData(`api/v1/books/${id}`, data, loader);
+        if (res.status === "success") {
+          dialog.close();
+          getAllBooks(0);
+        }
+      };
+    </script>
+    <!-- important for importing js code  -->
+    <script>
+      if (typeof module === "object") {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+    <!-- normal script imports etc  -->
+    <!-- work with jquery -->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script src="../src/js/templatemo-script.js"></script>
+    <script src="../src/utils/fn.js"></script>
+    <script src="../src/js/book.js"></script>
+    <script>
+      if (localStorage.jwt_token == "undefined" || !localStorage.jwt_token)
+        location.href = "./pages/home.html";
+    </script>
+    <!-- end of importing js code  -->
+    <script>
+      if (window.module) module = window.module;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+
+    <!-- bootstrap injection -->
+    <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <!-- include font awesome -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css" />
+    <!-- include animate -->
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.min.css" />
+    <!-- global styling  -->
+    <link rel="stylesheet" href="../src/css/normalize.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link rel="stylesheet" href="../src/css/loader.css" />
+
+    <!-- profile page styling -->
+    <link rel="stylesheet" href="../src/css/profile.css" />
+    <!-- check if user is logged in -->
+    <script>
+      if (localStorage.jwt_token == "undefined" || !localStorage.jwt_token)
+        location.href = "./login.html";
+    </script>
+
+    <!-- <script src="../node_modules/jquery/dist/jquery.min.js"></script> -->
+  </head>
+  <body style="text-align: right">
+    <span
+      class="loader hide"
+      id="loader"
+      style="position: fixed; right: 50%; top: 50%"
+    ></span>
+    <div class="upperPage">
+      <!-- upper container  -->
+      <div class="container">
+        <!-- main bod section -->
+        <div class="main-body">
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                User Profile
+              </li>
+              <li class="reload-btn" style="margin-left: auto">
+                <i
+                  onclick="refresh()"
+                  id="refresh"
+                  class="fa-solid fa-arrows-rotate"
+                ></i>
+              </li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+          <!-- User basic infos -->
+          <div class="basic-info">
+            <!-- cover image -->
+            <div class="poster skeleton">
+              <img id="cover_photo" alt="poster picture" />
+            </div>
+            <!-- cover image -->
+            <!-- data holder -->
+            <div class="data-holder">
+              <!-- user photo and change it-->
+              <button
+                class="profile-btn skeleton"
+                data-toggle="modal"
+                data-target="#change-profile-photo"
+              >
+                <img class="circle-img" id="user_photo" alt="" />
+              </button>
+              <div class="user-info">
+                <!-- user photo and change it-->
+                <!-- user name and role -->
+                <div>
+                  <h4 id="full_name">
+                    <div class="w-118 h-16 skeleton"></div>
+                  </h4>
+                  <span
+                    style="font-size: 9px; color: white"
+                    class="badge bg-success"
+                    id="user_role"
+                  ></span>
+                </div>
+                <!-- / user name and role -->
+
+                <div class="reviewing">
+                  <div class="likes">اعجب بهذه الصفحه <span id="user-rating" style="min-width:15px;"> </span> </div>
+                  <div
+                    class="like"
+                    style="color: rgb(255, 0, 0); font-size: 29px"
+                  >
+                    <i style="margin-right:10px ;" class="fa-solid fa-heart"></i>
+                    <!-- <i class="fa-regular fa-heart"></i> -->
+                  </div>
+                </div>
+              </div>
+              <div class="buttons">
+                <button
+                  data-toggle="modal"
+                  class="edit-cover-btn btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#change-cover-photo"
+                >
+                  تغير صورة الغلاف
+                  <i class="fa-solid fa-camera-retro"></i>
+                </button>
+              </div>
+            </div>
+            <!-- data holder -->
+          </div>
+          <!-- // User basic infos -->
+          <!-- information -->
+          <div class="information">
+            <div class="about btmb" id="about">حول</div>
+          </div>
+          <!-- information -->
+          <hr
+            style="
+              margin-top: 1px;
+              height: 1px;
+              border: none;
+              color: #555;
+              background-color: #555;
+              position: relative;
+              bottom: 1px;
+            "
+          />
+          <main class="content"></main>
+        </div>
+        <!-- end main bod section -->
+      </div>
+      <!-- end upper container -->
+    </div>
+
+    <!-- lower container -->
+    <div class="lowerPage">
+      <div class="container">
+        <!-- user information -->
+        <div class="user_information" id="user_information">
+          <div class="col-md-12">
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">الاسم</h6>
+                  </div>
+                  <!-- full name filled by Backend -->
+                  <div class="col-sm-9 text-secondary" id="user_full_name">
+                    <div class="w-118 h-16 skeleton" style="float: right"></div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">البريد الالكتروني</h6>
+                  </div>
+                  <!-- email filled by Backend -->
+                  <div
+                    class="col-sm-9 text-secondary"
+                    id="user_email"
+                    style="text-transform: lowercase"
+                  >
+                    <div class="w-152 h-16 skeleton" style="float: right"></div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">رقم الهاتف</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" id="user_phone">
+                    <div class="w-118 h-16 skeleton" style="float: right"></div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">العنوان</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" id="user_address">
+                    <div class="w-122 h-16 skeleton" style="float: right"></div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">تاريخ الميلاد</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" id="date_of_birth">
+                    <div class="w-162 h-16 skeleton" style="float: right"></div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">تاريخ الانضمام</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" id="join_date">
+                    <div class="w-182 h-16 skeleton" style="float: right"></div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-12">
+                    <button class="btn btn-info float-left" id="btn-login">
+                      تعديل بيانات الملف الشخصي
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="user_stat hide" id="user_stat">stat</div>
+        </div>
+        <!-- user information -->
+      </div>
+    </div>
+
+    <!-- modal change cover photo  -->
+    <div
+      class="modal fade"
+      id="change-cover-photo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="change-cover-photoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="change-cover-photoLabel">
+              تغير صورة الغلاف
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="file" accept="image/*" id="input_cover_photo" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="change_cover"
+              onclick="changePhoto('cover')"
+            >
+              change Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end modal change cover photo  -->
+
+    <!-- modal change profile photo  -->
+    <div
+      class="modal fade"
+      id="change-profile-photo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="change-profile-photoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="change-profile-photoLabel">
+              تغير صورة الملف الشخصي
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="file" accept="image/*" id="input_photo_photo" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="change_photo"
+              onclick="changePhoto('photo')"
+            >
+              change Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of lower container -->
+
+    <!-- modal change profile photo  -->
+
+    <!--  change user data -->
+
+    <dialog style="width: 70vw">
+      <header>Update User Data</header>
+      <form class="row g-3">
+        <div class="col-md-6">
+          <label for="input-fname" class="form-label">اسم العائله</label>
+          <input
+          class="form-control"
+          id="input-lname"
+          type="text"
+          minlength="4"
+          placeholder="اسم العائله"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="input-fname" class="form-label">اسم المستخدم</label>
+          <input
+          class="form-control"
+          id="input-fname"
+          type="text"
+          minlength="4"
+          placeholder="اسم المستخدم"
+          />
+        </div>
+        <div class="col-12">
+          <label for="input-email" class="form-label">الايمال</label>
+          <input
+          class="form-control"
+          id="input-email"
+          type="email"
+          minlength="5"
+          placeholder="الايمال"
+          />
+        </div>
+        <div class="col-12">
+          <label for="input-phone" class="form-label">رقم الهاتف"</label>
+          <input
+          class="form-control"
+          id="input-phone"
+          type="text"
+          minlength="5"
+          placeholder="رقم الهاتف"
+          />
+        </div>
+        <div class="col-12">
+          <label for="input-address" class="form-label">العنوان</label>
+          <input
+        class="form-control"
+          id="input-address"
+          type="text"
+          minlength="3"
+          placeholder="العنوان"
+        />
+        </div>
+        <div class="col-6 "></div>
+        <div class="col-6 ">
+          <label for="input-birth-date" >تاريخ الميلاد</label>
+          <input
+        class="form-control "
+          id="input-birth-date"
+          type="date"
+          minlength="3"
+          placeholder="تاريخ الميلاد"
+        />
+        <br>
+        </div>
+<div class="col-8 btn-group ruka_group">
+
+  <input type="submit" class="btn btn-primary"/> <button id="btn-cancel" class="btn btn-danger">Cancel</button>
+</div>
+      </form>
+    </dialog>
+    <br />
+    <output></output>
+
+    <!-- important for importing js code  -->
+    <script>
+      if (typeof module === "object") {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+    <!-- normal script imports etc  -->
+     <script src="../src/consts.js"></script>
+
+    <!-- import jquery  code  -->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- import bootstrap js code  -->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- functions by me -->
+    <script src="../src/utils/fn.js"></script>
+
+    <!-- chec login state -->
+    <script src="../src/js/profile.js"></script>
+
+    <!-- end of importing js code  -->
+    <script>
+      if (window.module) module = window.module;
+    </script>
+  </body>
+</html>

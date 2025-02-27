@@ -1,0 +1,157 @@
+
+.loader {
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    border: solid 7px ;
+    border-radius: 50%;
+    border-top-color: red ;
+    animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    to { transform: rotate(360deg); }
+}
+.skeleton{
+  opacity: .7;
+  animation: skeleton-loading 1s linear infinite alternate ;
+}
+@keyframes skeleton-loading{
+  0% { background-color: hsl(200, 20%, 70%); }
+  0% { background-color: hsl(200, 20%, 90%); } 
+}
+.h-16{
+  height: 16px;
+}
+.w-118{
+  width: 118px;
+}
+.w-120{
+  width: 120px;
+}
+.w-122{
+  width: 122px;
+}
+ .w-124{
+  width: 124px;
+}
+
+.w-126{
+  width: 126px;
+}
+.w-128{
+  width: 128px;
+}
+ .w-130{
+  width: 130px;
+}
+.w-134{
+  width: 134px;
+
+}
+.w-136{
+  width: 136px;
+
+}
+.w-138{
+  width: 138px;
+}
+.w-140{
+  width: 140px;
+}
+.w-142{
+  width: 142px;
+}
+.w-146{
+  width: 146px;
+}
+.w-146{
+  width: 146px;
+}
+.w-148{
+  width: 148px;
+}
+ .w-150{
+  width: 150px;
+}
+.w-152{
+  width: 152px;
+}
+ .w-154{
+  width: 154px;
+}
+ .w-156{
+  width: 156px;
+}
+ .w-158{
+  width: 158px;
+}
+ .w-160{
+  width: 160px;
+}
+ .w-162{
+  width: 162px;
+}
+ .w-164{
+  width: 164px;
+}
+ .w-166{
+  width: 166px;
+}
+ .w-168{
+  width: 168px;
+}
+ .w-170{
+  width: 170px;
+}
+ .w-172{
+  width: 172px;
+}
+ .w-174{
+  width: 174px;
+}
+ .w-176{
+  width: 176px;
+}
+ .w-178{
+  width: 178px;
+}
+ .w-180{
+  width: 180px;
+}
+ .w-182{
+  width: 182px;
+}
+ .w-320{
+  width: 320px;
+}
+/* #loader {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: block;
+    margin:15px auto;
+    position: relative;
+    background: #FFF;
+    box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+    box-sizing: border-box;
+    animation: shadowPulse 2s linear infinite;
+  }
+  
+  @keyframes shadowPulse {
+    33% {
+      background: #FFF;
+      box-shadow: -24px 0 #ddd, 24px 0 #FFF;
+    }
+    66% {
+      background: #ddd;
+      box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+    }
+    100% {
+      background: #FFF;
+      box-shadow: -24px 0 #FFF, 24px 0 #ddd;
+    }
+  } */

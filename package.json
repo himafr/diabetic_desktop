@@ -1,0 +1,37 @@
+{
+  "name": "diabetic",
+  "version": "2.0.0",
+  "description": "diabetic Care Electron Desktop Application",
+  "main": "main.js",
+  "build": {
+    "appId": "com.hema_sallem.id",
+    "win": {
+      "icon": "images/logo/logo_full.ico"
+    }
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon --exec electron .",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "diabetic care",
+    "diabetes",
+    "demo"
+  ],
+  "author": "hima sallem",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^9.4.4",
+    "electron-builder": "^24.1.8",
+    "nodemon": "^2.0.0"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.9",
+    "animate.css": "^4.1.1",
+    "bcrypt": "^5.1.1",
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.7.1",
+    "tailwindcss": "^4.0.9"
+  }
+}

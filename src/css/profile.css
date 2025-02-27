@@ -1,0 +1,133 @@
+
+.main-body {
+  padding: 0 15px;
+}
+
+/* .main-breadcrumb>ol:last-child{
+  align-self: flex-;
+} */
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+.breadcrumb {
+  margin-bottom: 0;
+}
+
+.profile-btn {
+  all: unset;
+}
+.profile-btn:focus {
+  outline: revert;
+}
+.circle-img {
+  width: 168px;
+  height: 168px;
+}
+.basic-info {
+  width: 100%;
+}
+.basic-info .poster {
+  width: 100% !important;
+  height: 380px !important;
+}
+.basic-info .poster img{
+  width: 100% !important;
+  height: 380px !important;
+  object-fit: cover;
+}
+  .data-holder {
+  height: 90px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+.data-holder .circle-img {
+  position: relative;
+  bottom: 84px;
+}
+.data-holder .user-info {
+  height: 80px;
+  width: 500px;
+  right: 30px;
+  position: relative;
+  align-items: center;
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+.data-holder .reviewing {
+  position: relative;
+  right: 80px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0 10px;
+}
+.data-holder .buttons {
+  position: relative;
+  bottom: 54px;
+}
+.information {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 90px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.information div {
+  padding: 10px;
+  padding-left: 15px;
+  cursor: pointer;
+}
+.btmb {
+  border-bottom-style: solid;
+  border-bottom-width: 4px;
+  color: #2f6ad1;
+
+  border-bottom-color: #2f6ad1;
+}
+.card-body > .row {
+  flex-direction: row-reverse;
+  text-transform: capitalize;
+}
+.lowerPage{
+  width: 100%;
+  padding-bottom: 10px;
+  background: var(--bg-color);
+}
+.upperPage{
+  width: 100%;
+  background:var(--g-bg-color);
+  
+  
+}
+.ruka_group{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.form-control {
+  border-radius: 0.25rem;
+}
+.ruka_float{
+  float: right;
+}
+input::placeholder{
+  float: right;
+}
+@media screen and (max-width: 1200px) {
+  .main-body {
+    padding: 0;
+  }
+  .main-body .main-breadcrumb {
+    padding: 0;
+  }
+  .breadcrumb {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+}
+.content {
+  background-color: #e2e8f0;
+}
